@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	@font-face {
+		font-family: 'open-sans-normal';
+		font-style: normal;
+		font-weight: 400;
+		src: url('../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf');
+	}
+	
+	@font-face {
+		font-family: 'open-sans-bold';
+		font-style: normal;
+		font-weight: 800;
+		src: url('../assets/fonts/Open_Sans/static/OpenSans_Condensed/OpenSans_Condensed-Bold.ttf');
+	}
+}
+
+.no-scroll {
+	--overflow: hidden;
+}
+
+
+:root {
+	--ion-font-family: 'open-sans-normal' !important;
+	font-family: 'open-sans-normal' !important;
+}
+

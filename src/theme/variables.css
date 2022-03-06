@@ -1,0 +1,18 @@
+/* Ionic Variables and Theming. For more info, please see:
+http://ionicframework.com/docs/theming/ */
+/** Ionic CSS Variables **/
+:root {
+	--ion-background-color: #FFFCF5;
+
+  /** primary **/
+  --ion-color-primary-bright: #FEFFFE;
+	--ion-color-primary-dark: #F4F4F6;
+
+	--ion-color-primary: #18699A;
+	--ion-color-secondary: #CC4C22;
+
+	--ion-color-dark: #343534;
+
+	--ion-text-color: #343534;
+
+}
