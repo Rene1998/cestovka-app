@@ -17,7 +17,8 @@ module.exports = {
 					bright: 'var(--ion-color-secondary)',
 					dark: 'var(--ion-color-primary)'
 				},
-				dark: 'var(--ion-color-dark)'
+				dark: 'var(--ion-color-dark)',
+				gold: 'var(--ion-color-gold)'
 			},
 			sizes: {
 				'input': '20px'

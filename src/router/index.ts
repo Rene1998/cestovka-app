@@ -9,13 +9,20 @@ const prefixRoutes = (prefix: string, routes: Array<RouteRecordRaw>) => {
 
 const routes: Array<RouteRecordRaw> = [
 	{ path: '/', redirect: '/home' },
-	cRoute('Homepage', '/home', () => import('@/views/HomePage.vue')),
+	...prefixRoutes('/', [
+		cRoute('Homepage', 'home', () => import('@/views/HomePage.vue')),
+		cRoute('Tour', 'tour/:id', () => import('@/views/TourPage.vue')),
+
+		cRoute('Test Page', 'test', () => import('@/views/test.vue'))
+	]),
 
 	...prefixRoutes('/accounts/', [
 		cRoute('Join', 'join', () => import('@/views/JoinPage.vue')),
 		cRoute('Login', 'login', () => import('@/views/LoginPage.vue')),
 		cRoute('Register', 'register', () => import('@/views/RegisterPage.vue')),
-	])
+	]),
+
+
 ]
 
 const router = createRouter({

@@ -22,6 +22,9 @@
 	--overflow: hidden;
 }
 
+.homepage-title {
+	@apply text-2xl font-black font-OpenSansBold text-left
+}
 
 :root {
 	--ion-font-family: 'open-sans-normal' !important;
