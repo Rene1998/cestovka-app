@@ -2,7 +2,7 @@
 	<div class="p-4">
 		<h1 class="homepage-title p-0 block mb-2">Popular Place</h1>
 		<swiper
-			v-if="destinations.length"
+			v-if="destinations?.length"
 			class="p-2 pb-7 overflow-visible"
 			:modules="swiperModules"
 			:slides-per-view="4.2"
@@ -10,18 +10,13 @@
 			:observer="true"
 			:observe-parents="true"
 			>
-			<swiper-slide class="overflow-visible max-h-fit max-h-fit" v-for="(destination, i) in destinations" :key="i">
+			<swiper-slide class="overflow-visible max-h-fit max-h-fit" v-for="(destination, i) in destinations" :key="i" @click="$router.push(`/search?searchValue=${destination._id}`)">
 				<ion-avatar class="w-64 h-64 drop-shadow-xl">
 					<img :src="destination.image.path" >
 				</ion-avatar>
 			</swiper-slide>
-			<swiper-slide>
-				<div class="rounded-full bg-primary-bright destination-more drop-shadow-xl justify-center flex items-center opacity-50">
-					<ion-icon class="text-secondary-bright" :icon="ellipsisHorizontalOutline" />
-				</div>
-			</swiper-slide>
 		</swiper>
-
+		<loading-spinner v-else :loadedArray="destinations" />
 	</div>
 </template>
 
@@ -37,18 +32,26 @@ import '@ionic/vue/css/ionic-swiper.css'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { ellipsisHorizontalOutline } from 'ionicons/icons'
 import { Swiper, SwiperSlide } from 'swiper/vue'
+import apiService from '@/utils/apiService'
+import { onMounted, ref } from 'vue'
+import { ICountry } from '@/shared/tour'
+import loadingSpinner from '@/components/LoadingSpinner.vue'
 
 const swiperModules = [IonicSlides]
 
+const destinations = ref<ICountry>()
 
-const destination = {
-	id: 1,
-	image: {
-		path: 'https://www.fodors.com/wp-content/uploads/2019/01/take-a-vacation.jpg'
+onMounted(async () => await loadCountries())
+
+const loadCountries = async() => {
+	try {
+		const { data } = await apiService.get_auth('/api/countries')
+		destinations.value = data
+		console.log(data)
+	} catch (err) {
+		console.error(err)
 	}
 }
-
-const destinations = Array(10).fill(destination)
 
 </script>
 

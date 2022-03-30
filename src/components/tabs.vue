@@ -1,12 +1,12 @@
 <template>
-	<div class="tabs-wrapper mt-4 mb-2 flex flex-row overflow-x-scroll whitespace-nowrap z-50">
+	<div v-if="countries?.length" class="tabs-wrapper mt-4 mb-2 flex flex-row overflow-x-scroll whitespace-nowrap z-50">
 		<div v-for="(country, i) in countries" :key="i">
-				<p fill="none" class="px-6 mb-2 relative pb-2" @click="selectTab(country)" :class="{'text-secondary-bright tab-selected': country.id == selectedCountry.id}">
+				<p fill="none" class="px-6 mb-2 relative pb-2" @click="selectTab(country)" :class="{'text-secondary-bright tab-selected': country._id == selectedCountry._id}">
 					{{ country.country_name }}
 				</p>
-				<!-- <div class="bg-secondary-dark absolute block h-1 w-6 rounded-full opacity-80" v-if="country.id == selectedCountry.id"></div> -->
 		</div>
 	</div>
+	<loading-spinner v-else class="h-4 my-8" />
 </template>
 
 <script lang="ts" setup>
@@ -14,35 +14,33 @@ import {
 	IonItem,
 	IonButton
 } from '@ionic/vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineEmits } from 'vue'
+import { ICountry } from '@/shared/tour'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
-interface ICountry {
-	id: number,
-	country_name: string
-}
+import apiService from '@/utils/apiService'
+
+const emit = defineEmits(['selectedCountryChanged'])
 
 const countries = ref<ICountry[] | null>(null)
-
-onMounted(() => {
-	countries.value = [
-		{ id: 1, country_name: 'Indonesia' },
-		{ id: 2, country_name: 'Vietnam' },
-		{ id: 3, country_name: 'China' },
-		{ id: 4, country_name: 'Thailand' },
-		{ id: 5, country_name: 'Malaysia' },
-		{ id: 6, country_name: 'Japan' },
-		{ id: 7, country_name: 'Slovakia' },
-	]
-
-	selectedCountry.value = countries.value[0]
-})
-
-
-
 const selectedCountry = ref<ICountry>()
+
+onMounted(async () => {
+	try {
+		const { data } = await apiService.get_auth('/api/countries')
+		console.log(data)
+		if(!data.length) return
+		countries.value = data
+		selectTab(countries.value[0])
+	} catch (err) {
+		console.error(err)
+	}
+
+})
 
 const selectTab = (tab: ICountry) => {
 	selectedCountry.value = tab
+	emit('selectedCountryChanged', tab)
 }
 
 </script>

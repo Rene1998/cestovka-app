@@ -8,20 +8,18 @@ const prefixRoutes = (prefix: string, routes: Array<RouteRecordRaw>) => {
 }
 
 const routes: Array<RouteRecordRaw> = [
-	{ path: '/', redirect: '/home' },
+	{ path: '/', redirect: '/accounts/join' },
 	...prefixRoutes('/', [
-		cRoute('Homepage', 'home', () => import('@/views/HomePage.vue')),
-		cRoute('Tour', 'tour/:id', () => import('@/views/TourPage.vue')),
+		cRoute('Homepage', 'home', () => import('@/views/HomePage.vue'), true),
+		cRoute('Tour', 'tour/:id', () => import('@/views/TourPage.vue'), true),
+		cRoute('Search', 'search', () => import('@/views/SearchPage.vue'), true),
 
-		cRoute('Test Page', 'test', () => import('@/views/test.vue'))
+		...prefixRoutes('accounts/', [
+			cRoute('Join', 'join', () => import('@/views/JoinPage.vue')),
+			cRoute('Login', 'login', () => import('@/views/LoginPage.vue')),
+			cRoute('Register', 'register', () => import('@/views/RegisterPage.vue')),
+		]),
 	]),
-
-	...prefixRoutes('/accounts/', [
-		cRoute('Join', 'join', () => import('@/views/JoinPage.vue')),
-		cRoute('Login', 'login', () => import('@/views/LoginPage.vue')),
-		cRoute('Register', 'register', () => import('@/views/RegisterPage.vue')),
-	]),
-
 
 ]
 

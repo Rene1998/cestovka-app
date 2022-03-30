@@ -11,7 +11,7 @@
     
 			<ion-card >
 				<ion-card-content>
-					<ion-item class="p-6 mb-6" lines="none">
+					<ion-item class="p-6 mb-6 opacity-80" lines="none">
 						<img :src="require('../assets/svg/travelpalmtreesymbol.svg')" />
 					</ion-item>
 					<ion-item lines="none">

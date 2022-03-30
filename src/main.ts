@@ -28,18 +28,19 @@ import 'tailwindcss/components.css'
 import 'tailwindcss/utilities.css'
 import 'tailwindcss/base.css'
 
-const app = createApp(App)
+const app = createApp(App).use(store)
   .use(IonicVue)
   .use(router);
 
 import * as IonComponents from '@ionic/vue'
+import store from './store'
 
 Object.keys(IonComponents).forEach((key: string) => {
     if (/^Ion[A-Z]\w+$/.test(key)) {
         app.component(key, IonComponents)
     }
 })
-  
+
 router.isReady().then(() => {
   app.mount('#app');
 	document.body.setAttribute('data-theme', 'light');
